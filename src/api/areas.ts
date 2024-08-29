@@ -1,10 +1,15 @@
 import { Hono } from "hono";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
+import { db } from "../db/db";
+import { areasToGenerateTable } from "../db/schema";
 
 const app = new Hono();
 
-// app.get("/", (c) => {});
+app.get("/", (c) => {
+  const allAreas = db.select().from(areasToGenerateTable).all();
+  return c.json(allAreas);
+});
 
 app.post(
   "/",
@@ -19,7 +24,16 @@ app.post(
   ),
   (c) => {
     const data = c.req.valid("json");
-    console.log(data);
+
+    db.insert(areasToGenerateTable)
+      .values({
+        minX: data.minX,
+        minY: data.minY,
+        maxX: data.maxX,
+        maxY: data.maxY,
+      })
+      .run();
+
     return c.text("", 202);
   }
 );

@@ -23,9 +23,11 @@ export const areasToGenerateTable = sqliteTable("areas_to_generate", {
   id,
   minX: real("min_x").notNull(),
   minY: real("min_y").notNull(),
-  max_x: real("max_x").notNull(),
-  max_y: real("max_y").notNull(),
+  maxX: real("max_x").notNull(),
+  maxY: real("max_y").notNull(),
 });
+
+export type AreaToGenerate = typeof areasToGenerateTable.$inferSelect;
 
 export const workersTable = sqliteTable("workers", {
   id,

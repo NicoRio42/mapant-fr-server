@@ -1,4 +1,4 @@
-import { Map, View } from "ol";
+import { Map, View, Feature } from "ol";
 // @ts-ignore
 import proj4 from "proj4";
 import { register } from "ol/proj/proj4.js";
@@ -7,6 +7,7 @@ import { transform } from "ol/proj.js";
 import Draw, { createBox } from "ol/interaction/Draw.js";
 import { OSM, Vector as VectorSource } from "ol/source.js";
 import { Vector as VectorLayer } from "ol/layer.js";
+import { Polygon } from "ol/geom.js";
 
 const FRANCE_CENTER = [2.43028, 46.53972];
 const ZOOM = 6;
@@ -101,3 +102,32 @@ drawInteraction.on("drawend", async (e) => {
     alert("An error occured while saving the area.");
   }
 });
+
+fetchAreas();
+
+async function fetchAreas() {
+  const response = await fetch("/api/areas");
+
+  if (!response.ok) {
+    alert("Something went wrong while fetching areas.");
+    return;
+  }
+
+  /** @type {import("../src/db/schema").AreaToGenerate[]} */
+  const areas = await response.json();
+
+  areas.forEach((area) => {
+    const polygon = new Feature(
+      new Polygon([
+        [
+          [area.minX, area.minY],
+          [area.maxX, area.minY],
+          [area.maxX, area.maxY],
+          [area.minX, area.maxY],
+        ],
+      ])
+    );
+
+    drawingSource.addFeature(polygon);
+  });
+}
