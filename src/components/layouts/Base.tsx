@@ -1,24 +1,26 @@
-import type { PropsWithChildren } from "hono/jsx";
+import type { Child, PropsWithChildren } from "hono/jsx";
 
 type Props = {
   title: string;
+  headChildren?: Child;
 };
 
-export function Base({ title, children }: PropsWithChildren<Props>) {
+export function Base({
+  title,
+  children,
+  headChildren,
+}: PropsWithChildren<Props>) {
   return (
     <html>
       <head>
         <title>{title}</title>
-        <script
-          src="https://unpkg.com/htmx.org@2.0.2"
-          integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
-          crossorigin="anonymous"
-          defer
-        ></script>
+
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
         />
+
+        {headChildren}
       </head>
 
       <body>{children}</body>

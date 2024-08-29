@@ -63,7 +63,17 @@ app.get("/:id", (c) => {
   if (worker === undefined) throw new HTTPException(404);
 
   return c.html(
-    <Base title={`Workers | ${worker.name}`}>
+    <Base
+      title={`Workers | ${worker.name}`}
+      headChildren={
+        <script
+          src="https://unpkg.com/htmx.org@2.0.2"
+          integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+          crossorigin="anonymous"
+          defer
+        ></script>
+      }
+    >
       <a href="/workers">Back</a>
       <h1>Worker: {worker.name}</h1>
 
