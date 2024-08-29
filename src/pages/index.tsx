@@ -4,18 +4,9 @@ import areasRoutes from "./areas.tsx";
 import { basicAuth } from "hono/basic-auth";
 import { Base } from "../components/layouts/Base.tsx";
 import { serveStatic } from "hono/bun";
+import { logger } from "hono/logger";
 
 const app = new Hono();
-
-app.use(
-  "/*",
-  basicAuth({
-    username: Bun.env.BASIC_AUTH_NAME as string,
-    password: Bun.env.BASIC_AUTH_PASSWORD as string,
-  })
-);
-
-app.use("/static/*", serveStatic({ root: "./" }));
 
 app.get("/", (c) => {
   return c.html(
