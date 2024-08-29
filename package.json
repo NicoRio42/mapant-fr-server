@@ -1,0 +1,17 @@
+{
+  "name": "mapant-fr-server",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "migration:generate": "drizzle-kit generate",
+    "migration:apply": "bun run ./scripts/migrate.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.33.0",
+    "hono": "^4.5.9",
+    "lucia": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.24.2"
+  }
+}
