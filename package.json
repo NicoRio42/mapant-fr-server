@@ -1,7 +1,7 @@
 {
   "name": "mapant-fr-server",
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
+    "dev": "bun run --hot src/routes/index.ts",
     "migration:generate": "drizzle-kit generate",
     "migration:apply": "bun run ./scripts/migrate.ts"
   },

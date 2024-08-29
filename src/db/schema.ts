@@ -18,3 +18,17 @@ export const tilesTable = sqliteTable("tiles", {
   pyramidGenerated: integer("pyramid_generated", { mode: "boolean" }).notNull(),
   workerInChargeId: text("worker_in_charge_id").notNull(),
 });
+
+export const areasToGenerateTable = sqliteTable("areas_to_generate", {
+  id,
+  minX: real("min_x").notNull(),
+  minY: real("min_y").notNull(),
+  max_x: real("max_x").notNull(),
+  max_y: real("max_y").notNull(),
+});
+
+export const workersTable = sqliteTable("workers", {
+  id,
+  name: text("name").unique().notNull(),
+  hashedApiKey: text("hashed_api_key"),
+});
